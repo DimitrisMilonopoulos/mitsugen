@@ -12,8 +12,7 @@ from material_color_utilities_python.material_color_utilities_python import (
 )
 from rich.logging import RichHandler
 
-from matugen.type import MaterialColors
-
+from type import MaterialColors
 
 def parse_arguments():
     parser = ArgumentParser()
