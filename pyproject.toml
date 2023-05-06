@@ -2,7 +2,7 @@
 name = "matugen"
 version = "0.1.0"
 description = ""
-authors = ["InioX <justimnix@gmail.com>"]
+authors = ["dimitriosmilonopoulos@gmail.com"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
