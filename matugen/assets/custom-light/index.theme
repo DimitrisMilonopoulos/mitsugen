@@ -1,0 +1,6 @@
+[X-GNOME-Metatheme]
+Name=custom-light
+Type=X-GNOME-Metatheme
+Comment=adw-gtk3 theme
+Encoding=UTF-8
+GtkTheme=custom-light
