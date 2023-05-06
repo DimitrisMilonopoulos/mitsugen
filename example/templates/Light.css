@@ -55,15 +55,15 @@ Tooltips */
 
     /* The following variables are dynamic */
     /* --accent: #0078d4; */
-    --accent: #60dbb9;
+    --accent: @{primary.hex};
     /* --app-bg: #f8f9f9; */
-    --app-bg: #dae5df;
+    --app-bg: @{surfaceVariant.hex};
     /* --acccent-pressed-bg: #0078d4; */
-    --accent-pressed-bg: #60dbb9;
+    --accent-pressed-bg:@{primary.hex};
     /* --accent-hover: ACCENT_HOVER_COLOR; */
-    --accent-hover: #46e8d893;
+    --accent-hover: @{primary.hex};
     /* --card-bg: CARD_LIGHT_BG_COLOR; */
-    --card-bg: #ffffff;
+    --card-bg: @{surface.hex};
     /*This should be considered the secondary color*/
     --app-bg-img: url('dummy');
 
@@ -479,17 +479,20 @@ canvas.decorationsOverviewRuler {
     padding: 0 var(--s5);
     height: var(--content-height);
     overflow-y: auto;
+    background: var(--card-bg) !important;
 }
 
 .sidebar.left {
     margin-left: var(--s4);
     animation: sidebarLeftIn var(--easing-timing-fast) var(--easing-curve-in) forwards !important;
     animation-delay: 300ms;
+    background: var(--card-bg) !important;
 }
 
 .sidebar.right {
     margin-right: var(--s4);
     animation: sidebarRightIn var(--easing-timing-normal) var(--easing-curve-in) forwards !important;
+    background: var(--card-bg) !important;
 }
 
 .sidebar.compact {
@@ -1316,6 +1319,15 @@ canvas.decorationsOverviewRuler {
 }
 
 .monaco-action-bar .actions-container[aria-label="Editor actions"][role="toolbar"] {
-    background: var(--card-bg);
+    background: var(--card-bg) !important;
     padding-right: 5px;
+}
+
+.title.breadcrumbs.show-file-icons {
+    border-radius: 8px 0 0 0 !important;
+}
+.part.auxiliarybar.basepanel.right[id="workbench.parts.auxiliarybar"]{
+    border-radius: 8px;
+    background: var(--card-bg) !important;
+
 }

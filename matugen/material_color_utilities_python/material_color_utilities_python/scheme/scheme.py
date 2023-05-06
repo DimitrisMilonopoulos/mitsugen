@@ -4,6 +4,7 @@ from regex import P
 from ..palettes.core_palette import *
 import json
 
+
 # /**
 #  * Represents a Material color scheme, a mapping of color roles to colors.
 #  */
@@ -169,7 +170,7 @@ class Scheme:
         core = CorePalette.of(argb)
         return Scheme(
             {
-                "primary": core.a1.tone(80),
+                "primary": core.a1.tone(70),
                 "onPrimary": core.a1.tone(20),
                 "primaryContainer": core.a1.tone(30),
                 "onPrimaryContainer": core.a1.tone(90),
@@ -189,7 +190,8 @@ class Scheme:
                 "onBackground": core.n1.tone(90),
                 "surface": core.n1.tone(10),
                 "onSurface": core.n1.tone(90),
-                "surfaceVariant": core.n2.tone(30),
+                # "surfaceVariant": core.n2.tone(20),
+                "surfaceVariant": core.n2.tone(15),
                 "onSurfaceVariant": core.n2.tone(80),
                 "outline": core.n2.tone(60),
                 "shadow": core.n1.tone(0),

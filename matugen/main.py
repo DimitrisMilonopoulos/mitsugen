@@ -1,3 +1,4 @@
+import os
 from util import Theme, Scheme, Config, set_wallpaper, reload_apps, parse_arguments
 
 
@@ -7,12 +8,11 @@ def get_scheme(args):
 
 
 def main():
+    home = os.environ["HOME"]
     args = parse_arguments()
     lightmode_enabled: bool = args.lightmode
     scheme = get_scheme(args)
-    conf = Config.read(
-        "/home/dim/Desktop/DownloadedPackages/Matugen/example/config.ini"
-    )
+    conf = Config.read(f"{home}/Desktop/DownloadedPackages/Matugen/example/config.ini")
     import pprint
 
     pprint.pprint("Scheme: ")
