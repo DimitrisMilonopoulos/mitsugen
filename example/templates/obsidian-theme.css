@@ -168,6 +168,7 @@ settings:
   --color-base-20: @{surfaceVariant.hex};
   --color-base-25: @{surface.hex};
   --color-base-30: @{surface.hex};
+  --slider-track-background: @{primary.hex}
 }
 .theme-dark {
   --color-accent: @{primary.hex};
@@ -176,6 +177,7 @@ settings:
   --color-base-20: @{surfaceVariant.hex};
   --color-base-25: @{surface.hex};
   --color-base-30: @{surface.hex};
+  --slider-track-background: @{primary.hex}
 }
 
 body:not(.adwaita-colors-always, .adwaita-colors-linux-only, .adwaita-colors-never).mod-linux.theme-dark,
