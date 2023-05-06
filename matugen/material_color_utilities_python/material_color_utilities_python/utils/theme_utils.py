@@ -4,6 +4,7 @@ from ..scheme.scheme import *
 from .image_utils import *
 from .string_utils import *
 
+
 # /**
 #  * Generate custom color group from source and target color
 #  *
@@ -18,7 +19,7 @@ def customColor(source, color):
     value = color["value"]
     from_v = value
     to = source
-    if (color["blend"]):
+    if color["blend"]:
         value = Blend.harmonize(from_v, to)
     palette = CorePalette.of(value)
     tones = palette.a1
@@ -39,6 +40,7 @@ def customColor(source, color):
         },
     }
 
+
 # /**
 #  * Generate a theme from a source color
 #  *
@@ -47,7 +49,7 @@ def customColor(source, color):
 #  * @return Theme object
 #  */
 # NOTE: Changes made to output format to be Dictionary
-def themeFromSourceColor(source, customColors = []):
+def themeFromSourceColor(source, customColors=[]):
     palette = CorePalette.of(source)
     return {
         "source": source,
@@ -63,8 +65,9 @@ def themeFromSourceColor(source, customColors = []):
             "neutralVariant": palette.n2,
             "error": palette.error,
         },
-        "customColors": [customColor(source, c) for c in customColors]
+        "customColors": [customColor(source, c) for c in customColors],
     }
+
 
 # /**
 #  * Generate a theme from an image source
@@ -73,7 +76,7 @@ def themeFromSourceColor(source, customColors = []):
 #  * @param customColors Array of custom colors
 #  * @return Theme object
 #  */
-def themeFromImage(image, customColors = []):
+def themeFromImage(image, customColors=[]):
     source = sourceColorFromImage(image)
     return themeFromSourceColor(source, customColors)
 

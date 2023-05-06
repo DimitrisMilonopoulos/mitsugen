@@ -9,16 +9,18 @@ def get_scheme(args):
 
 def main():
     home = os.environ["HOME"]
+    # get Parent directory
+    parent_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     args = parse_arguments()
     lightmode_enabled: bool = args.lightmode
     scheme = get_scheme(args)
-    conf = Config.read(f"{home}/Desktop/DownloadedPackages/Matugen/example/config.ini")
+    conf = Config.read(f"{parent_dir}/example/config.ini")
     import pprint
 
     pprint.pprint("Scheme: ")
     pprint.pprint(scheme, sort_dicts=False)
 
-    Config.generate(scheme, conf, args.wallpaper, lightmode_enabled)
+    Config.generate(scheme, conf, args.wallpaper, lightmode_enabled, parent_dir)
     reload_apps(lightmode_enabled, scheme=scheme)
     set_wallpaper(args.wallpaper)
 

@@ -112,6 +112,7 @@ class Config:
         config: ConfigParser,
         wallpaper: str,
         lightmode_enabled: bool,
+        parent_dir: str,
     ) -> dict | None:
         """Generate a config file from a template
 
@@ -126,7 +127,11 @@ class Config:
         for item in config.sections():
             num = 0
             template_name = config[item].name
-            template_path = Path(config[item]["template_path"]).expanduser()
+            template_path_str = config[item]["template_path"]
+            if template_path_str.startswith("."):
+                template_path_str = f"{parent_dir}/{template_path_str[1:]}"
+            template_path = Path(template_path_str).expanduser()
+            # if its a relative path use parent dir as base.
             output_path = Path(config[item]["output_path"]).expanduser()
 
             if lightmode_enabled and cls._is_dark_theme(template_name):
