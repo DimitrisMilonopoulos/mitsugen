@@ -1,5 +1,6 @@
 import os
-from util import Theme, Scheme, Config, set_wallpaper, reload_apps, parse_arguments
+import pprint
+from src.util import Theme, Scheme, Config, set_wallpaper, reload_apps, parse_arguments
 
 
 def get_scheme(args):
@@ -8,14 +9,13 @@ def get_scheme(args):
 
 
 def main():
-    home = os.environ["HOME"]
-    # get Parent directory
     parent_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     args = parse_arguments()
     lightmode_enabled: bool = args.lightmode
     scheme = get_scheme(args)
     conf = Config.read(f"{parent_dir}/example/config.ini")
-    import pprint
+    if not conf:
+        raise Exception("Could not find config file")
 
     pprint.pprint("Scheme: ")
     pprint.pprint(scheme, sort_dicts=False)

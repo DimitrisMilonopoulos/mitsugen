@@ -6,13 +6,10 @@ from configparser import ConfigParser
 from pathlib import Path
 from typing import Tuple
 
-from material_color_utilities_python.material_color_utilities_python import (
-    Image,
-    themeFromImage,
-)
 from rich.logging import RichHandler
 
-from matugen.type import MaterialColors
+from src.material_color_utilities_python import Image, themeFromImage
+from src.models import MaterialColors
 
 
 def parse_arguments():
@@ -45,8 +42,6 @@ log = setup_logging()
 
 def reload_apps(lightmode_enabled: bool, scheme: MaterialColors):
     adw_theme = "adw-gtk3-dark" if not lightmode_enabled else "adw-gtk3"
-    # log.info("Restarting waybar")
-    # os.system("killall -SIGUSR2 waybar")
     postfix = "dark" if not lightmode_enabled else "light"
 
     log.info(f"Restarting GTK {postfix}")
@@ -60,13 +55,6 @@ def reload_apps(lightmode_enabled: bool, scheme: MaterialColors):
     os.system(
         f"gsettings set org.gnome.shell.extensions.user-theme name 'Marble-blue-{postfix}'"
     )
-
-    # log.info("Restarting kitty")
-    # os.system("killall -SIGUSR1 kitty")
-    background = scheme["surface"]
-    # os.system(
-    #     f"emacsclient  --eval '(progn (set-face-background '\\''default (format \"{background}\")) (set-face-background '\\''hl-line (format \"{background}\")))'"
-    # )
 
 
 def set_wallpaper(path: str):
@@ -117,7 +105,7 @@ class Config:
         """Generate a config file from a template
 
         Args:
-            scheme (dict): The color scheme to use
+            scheme (MaterialColors): The color scheme to use
             config (ConfigParser): The config file to use
             wallpaper (str): The path to the wallpaper
 
@@ -156,7 +144,7 @@ class Config:
                 pattern_rgb = f"@{{{key}.rgb}}"
                 pattern_wallpaper = "@{wallpaper}"
 
-                hex_stripped = value[1:]
+                hex_stripped = value[1:]  # type: ignore
                 rgb_value = f"rgb{ColorTransformer.hex_to_rgb(hex_stripped)}"
                 wallpaper_value = os.path.abspath(wallpaper)
 
@@ -202,7 +190,7 @@ class Theme:
 
 
 class Scheme:
-    def __init__(self, theme: str, lightmode: bool):
+    def __init__(self, theme: dict, lightmode: bool):
         if lightmode:
             log.info("Using light scheme")
             self.scheme_dict = theme["schemes"]["light"].props
@@ -220,7 +208,7 @@ class Scheme:
             scheme[key] = ColorTransformer.dec_to_rgb(value)
         return scheme
 
-    def to_hex(self) -> dict:
+    def to_hex(self) -> MaterialColors:
         scheme = self.scheme_dict
 
         # Need to convert to rgb first
