@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "matugen"
-version = "0.1.0"
+name = "mitsugen"
+version = "0.1.1"
 description = ""
 authors = ["dimitriosmilonopoulos@gmail.com"]
 readme = "README.md"
@@ -9,7 +9,6 @@ readme = "README.md"
 python = "^3.10"
 rich = "13.3.1"
 pillow = "^9.4.0"
-regex = "^2023.3.23"
 
 [build-system]
 requires = ["poetry-core"]
