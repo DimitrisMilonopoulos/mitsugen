@@ -1,11 +1,21 @@
 import os
-import pprint
-from src.util import Theme, Scheme, Config, set_wallpaper, reload_apps, parse_arguments
+
+from rich.console import Console
+
+from models import MaterialColors
+from src.util import Config, Scheme, Theme, parse_arguments, reload_apps, set_wallpaper
 
 
 def get_scheme(args):
     scheme = Scheme(Theme.get(args.wallpaper), args.lightmode)
     return scheme.to_hex()
+
+
+def print_scheme(scheme: MaterialColors):
+    console = Console()
+    print("Scheme info:")
+    for key, value in scheme.items():
+        console.print(f"{key}: {value}", style=f"{value}")
 
 
 def main():
@@ -17,8 +27,7 @@ def main():
     if not conf:
         raise Exception("Could not find config file")
 
-    pprint.pprint("Scheme: ")
-    pprint.pprint(scheme, sort_dicts=False)
+    print_scheme(scheme)
 
     Config.generate(scheme, conf, args.wallpaper, lightmode_enabled, parent_dir)
     reload_apps(lightmode_enabled, scheme=scheme)
