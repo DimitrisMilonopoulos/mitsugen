@@ -31,23 +31,22 @@ poetry install
 
 ## Prerequisites
 
-1. Put the assets in the `matugen/assets` folder in the `config.ini` specified dirs. (Will create an installation script in the forceable future)
+1. Put the assets in the `assets` folder in the `config.ini` specified dirs. (Will create an installation script in the forceable future)
 2. Update the `example/templates/config.ini` with your paths
-On root directory
 
 3. Execute the following command and enjoy your new theme :smile:
 
 For dark theme:
 
 ```shell
-poetry run python matugen/main.py <wallpaper_path> 
+poetry run python src/main.py <wallpaper_path> 
 ```
 
 For light theme:
 
 
 ```shell
-poetry run python matugen/main.py <wallpaper_path> -l
+poetry run python src/main.py <wallpaper_path> -l
 ```
 ![](screenshots/test.png)
 
