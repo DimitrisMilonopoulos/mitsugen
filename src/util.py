@@ -4,9 +4,9 @@ import re
 from argparse import ArgumentParser, Namespace
 from configparser import ConfigParser
 from pathlib import Path
-from typing import Tuple
 
 from rich.logging import RichHandler
+from transformers import ColorTransformer
 
 from src.material_color_utilities_python import Image, themeFromImage
 from src.models import MaterialColors
@@ -61,24 +61,6 @@ def set_wallpaper(path: str):
     log.info("Setting wallpaper with swaybg")
     os.system("gsettings set org.gnome.desktop.background picture-options 'scaled'")
     os.system(f"gsettings set org.gnome.desktop.background picture-uri {path}")
-
-
-class ColorTransformer:
-    @staticmethod
-    def rgb_to_hex(rgb: int) -> str:
-        return "%02x%02x%02x" % rgb
-
-    @staticmethod
-    def hex_to_rgb(hexa: str):
-        return tuple(int(hexa[i : i + 2], 16) for i in (0, 2, 4))
-
-    @staticmethod
-    def dec_to_rgb(decimal_value: int) -> Tuple[int, int, int]:
-        red = (decimal_value >> 16) & 255
-        green = (decimal_value >> 8) & 255
-        blue = decimal_value & 255
-
-        return red, green, blue
 
 
 class Config:
@@ -142,16 +124,24 @@ class Config:
                 pattern = f"@{{{key}}}"
                 pattern_hex = f"@{{{key}.hex}}"
                 pattern_rgb = f"@{{{key}.rgb}}"
+                pattern_hue = f"@{{{key}.hue}}"
+                pattern_sat = f"@{{{key}.sat}}"
+                pattern_light = f"@{{{key}.light}}"
                 pattern_wallpaper = "@{wallpaper}"
 
                 hex_stripped = value[1:]  # type: ignore
                 rgb_value = f"rgb{ColorTransformer.hex_to_rgb(hex_stripped)}"
+                hue, light, saturation = ColorTransformer.hex_to_hls(hex_stripped)
                 wallpaper_value = os.path.abspath(wallpaper)
 
                 output_data = re.sub(pattern, hex_stripped, output_data)
                 output_data = re.sub(pattern_hex, value, output_data)
                 output_data = re.sub(pattern_rgb, rgb_value, output_data)
                 output_data = re.sub(pattern_wallpaper, wallpaper_value, output_data)
+                output_data = re.sub(pattern_hue, f"{hue}", output_data)
+                output_data = re.sub(pattern_sat, f"{saturation}", output_data)
+                output_data = re.sub(pattern_light, f"{light}", output_data)
+
                 num += 1
 
             try:

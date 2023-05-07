@@ -80,9 +80,9 @@ poetry run python src/main.py <wallpaper_path> -l
   }}
 ```
 
+## BetterDiscord
 
-
-
+Install [Material Discord](https://github.com/JustAlittleWolf/Material-You-Discord-Theme) and apply the script then enable the material you theme from the better Discord theme settings
 # Special Thanks 
 - [Obisidian Adwaita theme](https://github.com/birneee/obsidian-adwaita-theme)
 - [Material Color Utilities Python](https://github.com/avanisubbiah/material-color-utilities-python)
