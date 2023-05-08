@@ -31,7 +31,7 @@ poetry install
 
 ## Prerequisites
 
-1. Put the assets in the `assets` folder in the `config.ini` specified dirs. (Will create an installation script in the forceable future)
+1. Put the assets in the `assets` folder in the `config.ini` specified dirs. (Will create an installation script in the foreseeable future)
 2. Update the `example/templates/config.ini` with your paths
 
 3. Execute the following command and enjoy your new theme :smile:
