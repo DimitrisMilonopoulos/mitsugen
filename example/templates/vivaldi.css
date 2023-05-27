@@ -1,0 +1,22 @@
+#browser {
+    --colorBg: @{surfaceVariant.hex} !important;
+    --colorBgAlphaBlur: @{surface.hex} !important;
+    --colorBgAlpha: @{surfaceVariant.hex}e6 !important;
+    --colorBgAlphaHeavy: @{surfaceVariant.hex}a6 !important;
+    --colorBgAlphaHeavier: @{surfaceVariant.hex}40 !important;
+    --colorBgAlphaBlur: @{surfaceVariant.hex}f5 !important;
+    --colorBgDark: @{surfaceVariant.hex} !important;
+    --colorBgDarker: @{surfaceVariant.hex} !important;
+    --colorBgLight: @{surfaceVariant.hex} !important;
+    --colorBgLighter: @{surfaceVariant.hex} !important;
+    --colorBgLightIntense: @{surfaceVariant.hex} !important;
+    --colorBgIntenser: @{surfaceVariant.hex} !important;
+    --colorBgIntserAlpha: @{surfaceVariant.hex}f2 !important;
+    --colorHighlightBg: @{primary.hex} ! important;
+    --colorHighlightBgFaded: @{onPrimary.hex} !important;
+    --colorHighlightBgDark: @{tertiary.hex} !important;
+    --colorAccentBg: @{surface.hex} !important;
+    /*Used for URL bar*/
+    --colorBgIntense: @{surface.hex}a5 !important;
+
+}

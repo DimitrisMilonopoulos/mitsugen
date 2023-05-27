@@ -1319,12 +1319,18 @@ canvas.decorationsOverviewRuler {
 }
 
 .monaco-action-bar .actions-container[aria-label="Editor actions"][role="toolbar"] {
-    background: var(--card-bg) !important;
-    padding-right: 5px;
+    /*Note include when tabs disabled*/
+    /* background: var(--card-bg) !important; */
+    /* padding-right: 5px; */ /*Note*/
+}
+
+/*That works*/
+.monaco-grid-view {
+    border-radius: 20px;
 }
 
 .title.breadcrumbs.show-file-icons {
-    border-radius: 8px 0 0 0 !important;
+    border-radius: 0 0 0 0 !important;
 }
 .part.auxiliarybar.basepanel.right[id="workbench.parts.auxiliarybar"]{
     border-radius: 8px;

@@ -23,6 +23,12 @@ def parse_arguments():
         help="specify whether to use light mode",
         action="store_true",
     )
+    parser.add_argument(
+        "-i",
+        "--ui",
+        help="use ui",
+        action="store_true",
+    )
     args: Namespace = parser.parse_args()
     return args
 

@@ -3,35 +3,38 @@ import os
 from rich.console import Console
 
 from models import MaterialColors
+from src.applier.domain import ApplierDomain, GenerationOptions
 from src.util import Config, Scheme, Theme, parse_arguments, reload_apps, set_wallpaper
+from src.ui.app import GtkApp
 
 
-def get_scheme(args):
-    scheme = Scheme(Theme.get(args.wallpaper), args.lightmode)
-    return scheme.to_hex()
-
-
-def print_scheme(scheme: MaterialColors):
-    console = Console()
-    print("Scheme info:")
-    for key, value in scheme.items():
-        console.print(f"{key}: {value}", style=f"{value}")
-
-
-def main():
+def main():  # sourcery skip: raise-specific-error
     parent_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    args = parse_arguments()
-    lightmode_enabled: bool = args.lightmode
-    scheme = get_scheme(args)
+    arguments = parse_arguments()
+    lightmode_enabled: bool = arguments.lightmode
+
     conf = Config.read(f"{parent_dir}/example/config.ini")
     if not conf:
         raise Exception("Could not find config file")
 
-    print_scheme(scheme)
+    applier_domain = ApplierDomain(
+        conf=conf,
+        generation_options=GenerationOptions(
+            parent_dir=parent_dir,
+            lightmode_enabled=lightmode_enabled,
+            wallpaper_path=arguments.wallpaper,
+        ),
+    )
+    if arguments.ui:
+        app = GtkApp(
+            application_id="com.picker.Mitsugen", applier_domain=applier_domain
+        )
+        app.run(None)
+        import time
 
-    Config.generate(scheme, conf, args.wallpaper, lightmode_enabled, parent_dir)
-    reload_apps(lightmode_enabled, scheme=scheme)
-    set_wallpaper(args.wallpaper)
+        time.sleep(2000)
+    else:
+        applier_domain.apply_theme()
 
 
 if __name__ == "__main__":

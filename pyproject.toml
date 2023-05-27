@@ -9,6 +9,9 @@ readme = "README.md"
 python = "^3.10"
 rich = "13.3.1"
 pillow = "^9.4.0"
+pygobject = "^3.44.1"
+material = "^0.1"
+pydantic = "^1.10.8"
 
 [build-system]
 requires = ["poetry-core"]
