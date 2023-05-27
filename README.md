@@ -52,6 +52,9 @@ poetry run python src/main.py <wallpaper_path> -l
 
 # Screenshots
 
+## GTK4 WIP UI!
+![](screenshots/gtk4_ui.png)
+
 ## Obisidian Dark
 ![](screenshots/obsidian-dark.png)
 

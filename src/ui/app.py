@@ -48,12 +48,11 @@ class MainWindow(Gtk.ApplicationWindow):
         self.set_title("Mitsugen")
         self._add_light_theme_switch()
 
-        self.box2.append(self.switch_box)
         self.box2.set_margin_start(10)
         self.box2.set_margin_end(10)
-        file_picker_button = Gtk.Button(label="Open File")
+        self.box2.append(self._add_wallpaper_image())
+        file_picker_button = Gtk.Button(label="Select Wallpaper")
         file_picker_button.connect("clicked", self.on_file_picker_button_clicked)
-        self.box2.append(file_picker_button)
         self._color_buttons: dict[str, Gtk.ColorButton] = {}
 
         listbox = Gtk.ListBox(vexpand=True, hexpand=True, show_separators=False)
@@ -63,7 +62,27 @@ class MainWindow(Gtk.ApplicationWindow):
         for color_key in self._applier_domain.scheme.keys():
             self._listbox.append(self._add_color_pick_button(color_key))
         self.box2.append(listbox)
-        self.box2.append(self.create_button_apply_colorscheme())
+        headerbar = Gtk.HeaderBar()
+        headerbar.pack_end(self.create_button_apply_colorscheme())
+        headerbar.pack_start(file_picker_button)
+        headerbar.pack_start(self.switch_box)
+
+        self.set_titlebar(headerbar)
+
+    def _add_wallpaper_image(self):
+        self.wallpaper_label = Gtk.Label(
+            label=self._applier_domain._generation_options.wallpaper_path
+            or "No wallpaper selected"
+        )
+        switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        image = Gtk.Image()
+        image.set_from_file(self._applier_domain._generation_options.wallpaper_path)
+        image.set_pixel_size(100)
+        self.wallpaper_image = image
+        switch_box.append(image)
+        switch_box.append(self.wallpaper_label)
+        switch_box.set_spacing(5)
+        return switch_box
 
     def create_button_apply_colorscheme(self):
         button = Gtk.Button(label="Apply")
@@ -79,10 +98,20 @@ class MainWindow(Gtk.ApplicationWindow):
             if path:
                 self._applier_domain.set_wallpaper_path(path)
                 self._applier_domain.reset_scheme()
+                self.reset_wallpaper()
                 self.reset_buttons()
 
         except GLib.Error as error:
             print(f"Error opening file: {error.message}")
+
+    def reset_wallpaper(self):
+        self.wallpaper_label.set_text(
+            self._applier_domain._generation_options.wallpaper_path
+            or "No wallpaper selected"
+        )
+        self.wallpaper_image.set_from_file(
+            self._applier_domain._generation_options.wallpaper_path
+        )
 
     def on_file_picker_button_clicked(self, button):
         folder_path = Gio.File.new_for_path(
@@ -134,6 +163,7 @@ class MainWindow(Gtk.ApplicationWindow):
             )
 
     def _add_light_theme_switch(self):
+        self.light_theme_switch = Gtk.Switch()
         label = Gtk.Label(label="Light Theme")
         self.switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.switch_box.append(label)
