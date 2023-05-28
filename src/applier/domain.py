@@ -1,12 +1,12 @@
-from configparser import ConfigParser
 import os
 import subprocess
-from rich.console import Console
+from configparser import ConfigParser
+
 from pydantic import BaseModel
+from rich.console import Console
 
 from models import MaterialColors
-from util import Config, Scheme, Theme, set_wallpaper
-from util import reload_apps
+from util import Config, Scheme, Theme, reload_apps, set_wallpaper
 
 
 class GenerationOptions(BaseModel):

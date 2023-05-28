@@ -6,10 +6,10 @@ from configparser import ConfigParser
 from pathlib import Path
 
 from rich.logging import RichHandler
-from transformers import ColorTransformer
 
 from material_color_utilities_python import Image, themeFromImage
 from models import MaterialColors
+from transformers import ColorTransformer
 
 
 def parse_arguments():
