@@ -63,6 +63,8 @@ For light theme:
 ```shell
 poetry run python src/main.py --wallpaper <wallpaper_path> -l
 ```
+4. For adaptive folder icons make sure to install [Papirus Folders](https://github.com/PapirusDevelopmentTeam/papirus-folders) and have papirus on your `.local/share/icons` folder. Otherwise you will need admin permissions.
+
 ![](screenshots/test.png)
 
 # Screenshots

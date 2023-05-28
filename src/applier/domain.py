@@ -6,6 +6,9 @@ from pydantic import BaseModel
 from rich.console import Console
 
 from models import MaterialColors
+from src.material_color_utilities_python.closest_folder_color.domain import (
+    ClosestFolderColorDomain,
+)
 from util import Config, Scheme, Theme, reload_apps, set_wallpaper
 
 
@@ -29,6 +32,7 @@ class ApplierDomain:
     ) -> None:
         self._generation_options = generation_options
         self._conf = conf
+        self._closest_folder_color_domain = ClosestFolderColorDomain()
 
     def set_wallpaper_path(self, path: str) -> None:
         self._generation_options.wallpaper_path = path
@@ -58,14 +62,39 @@ class ApplierDomain:
         if self._generation_options.wallpaper_path is None:
             raise ValueError("Wallpaper path is None")
 
+        scheme = self._generation_options.scheme or self._get_scheme()
         Config.generate(
-            scheme=self._generation_options.scheme or self._get_scheme(),
+            scheme=scheme,
             config=self._conf,
             wallpaper=self._generation_options.wallpaper_path,
             lightmode_enabled=self._generation_options.lightmode_enabled,
             parent_dir=self._generation_options.parent_dir,
         )
+        primary_color = scheme["primary"]
+        folder_color = self._closest_folder_color_domain.get_closest_color(
+            primary_color
+        )
+
+        self._set_papirus_icon_theme(folder_color)
         self._reload_apps()
+
+    def _set_papirus_icon_theme(self, folder_color: str) -> None:
+        print(f"Applying Papirus {folder_color}.")
+        # Set current directory to home directory. No need for sudo then
+        os.chdir(os.path.expanduser("~"))
+        os.system(f"papirus-folders -C {folder_color}")
+        os.system(f"papirus-folders -C {folder_color}")
+
+        lightmode_enabled = self._generation_options.lightmode_enabled
+
+        if lightmode_enabled:
+            os.system(
+                "gsettings set org.gnome.desktop.interface icon-theme Papirus-Light"
+            )
+        else:
+            os.system(
+                "gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark"
+            )
 
     def _reload_apps(self) -> None:
         if self._generation_options.wallpaper_path is None:
