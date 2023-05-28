@@ -44,7 +44,7 @@ class MainWindow(Gtk.ApplicationWindow):
         # self.set_child(self.box1)
         self.box1.append(self.box2)
         self.box1.append(self.box3)
-        self.set_default_size(600, 250)
+        self.set_default_size(600, 600)
         self.set_title("Mitsugen")
         self._add_light_theme_switch()
 

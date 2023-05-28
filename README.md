@@ -35,18 +35,23 @@ poetry install
 2. Update the `example/templates/config.ini` with your paths
 
 3. Execute the following command and enjoy your new theme :smile:
+UI option
+
+```shell
+poetry run python src/main.py --ui
+```
 
 For dark theme:
 
 ```shell
-poetry run python src/main.py <wallpaper_path> 
+poetry run python src/main.py --wallpaper <wallpaper_path> 
 ```
 
 For light theme:
 
 
 ```shell
-poetry run python src/main.py <wallpaper_path> -l
+poetry run python src/main.py --wallpaper <wallpaper_path> -l
 ```
 ![](screenshots/test.png)
 
@@ -54,6 +59,7 @@ poetry run python src/main.py <wallpaper_path> -l
 
 ## GTK4 WIP UI!
 ![](screenshots/gtk4_ui.png)
+![](screeenshots/ui.png)
 
 ## Obisidian Dark
 ![](screenshots/obsidian-dark.png)

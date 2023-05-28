@@ -93,4 +93,4 @@ class ApplierDomain:
 
         # Remove leading/trailing whitespace and newline characters from the output
         output = output.strip()
-        return output
+        return output.replace("'", "")
