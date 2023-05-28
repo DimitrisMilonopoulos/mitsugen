@@ -8,7 +8,7 @@
 		--context-menu-bg: @{surface.hex};
 		/* --editor-bg: rgba(32, 32, 32, 0.75); */
 		--editor-widget-bg: var(--card-bg);
-		--foreground: #000000;
+		--foreground: white;
 		--hover-bg: var(--card-bg);
 		--list-item-bg: rgba(255, 255, 255, 0.0605);
 		--list-item-fg: #A9a9a9;
@@ -109,7 +109,7 @@
 	
 		--hover-bg: var(--flyout-bg);
 		--list-item-bg: rgba(0, 0, 0, 0.0373);
-		--list-item-fg: #0000009b;
+		--list-item-fg: white;
 	
 		--notification-toast-bg: var(--flyout-bg);
 		--notification-border-radius: 6px;
@@ -517,14 +517,11 @@
 	
 	.sidebar.left {
 		margin-left: var(--s4);
-		animation: sidebarLeftIn var(--easing-timing-fast) var(--easing-curve-in) forwards !important;
-		animation-delay: 300ms;
     background: var(--card-bg) !important;
 	}
 	
 	.sidebar.right {
 		margin-right: var(--s4);
-		animation: sidebarRightIn var(--easing-timing-normal) var(--easing-curve-in) forwards !important;
     background: var(--card-bg) !important;
 	}
 	
@@ -620,15 +617,6 @@
 		top: 0 !important;
 	}
 	
-	.quick-input-widget {
-		animation: quickInputWidget var(--easing-timing-normal) var(--easing-curve-in) forwards !important;
-		/* animation-delay: 60s; */
-	}
-	
-	.quick-input-widget .quick-input-list {
-		animation: quickInputListIn var(--easing-timing-fast) var(--easing-curve-in) forwards !important;
-		animation-delay: 120s;
-	}
 	
 	.quick-input-widget .monaco-list-row.selected,
 	.monaco-list-row.selected,
@@ -768,14 +756,10 @@
 	
 	.activitybar.left {
 		margin-left: var(--s3) !important;
-		animation: sidebarLeftIn var(--easing-timing-slow) var(--easing-curve-in) forwards !important;
-		animation-delay: 80ms;
 	}
 	
 	.activitybar.right {
 		margin-left: -4px;
-		animation: sidebarRightIn var(--easing-timing-slow) var(--easing-curve-in) forwards !important;
-		animation-delay: 80ms;
 	}
 	
 	.activitybar.compact.right {
@@ -1023,14 +1007,6 @@
 		background-color: var(--app-bg) !important;
 	}
 	
-	/* Statusbar */
-	.statusbar {
-		box-shadow: var(--depth-8);
-		background: var(--card-bg) !important;
-		border: var(--border);
-		animation: statusBarIn var(--easing-timing-normal) var(--easing-curve-in) forwards !important;
-		animation-delay: 3s;
-	}
 	
 	.monaco-workbench .part.statusbar > .items-container > .statusbar-item {
 		color: var(--foreground) !important;
@@ -1081,10 +1057,6 @@
 		box-shadow: var(--depth-16);
 	}
 	
-	.workbench-hover:not(.skip-fade-in) {
-		animation: slide-in var(--easing-timing-fast) var(--easing-curve-in) forwards !important;
-	}
-	
 	/* Dropdown container */
 	.monaco-select-box-dropdown-container > .select-box-dropdown-list-container {
 		color: var(--foreground) !important;
@@ -1130,10 +1102,6 @@
 		background: var(--noise-bg) repeat var(--context-menu-bg) !important;
 		background-blend-mode: exclusion;
 		backdrop-filter: var(--backdrop-filter);
-	}
-	
-	.context-view.monaco-menu-container {
-		animation: fadeIn var(--easing-timing-fast) var(--easing-curve-in) !important;
 	}
 	
 	.monaco-menu-container .monaco-scrollable-element,
