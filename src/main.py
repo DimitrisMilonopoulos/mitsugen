@@ -1,8 +1,8 @@
 import os
 
-from src.applier.domain import ApplierDomain, GenerationOptions
-from src.ui.app import GtkApp
-from src.util import Config, parse_arguments
+from applier.domain import ApplierDomain, GenerationOptions
+from ui.app import GtkApp
+from util import Config, parse_arguments
 
 
 def main():  # sourcery skip: raise-specific-error

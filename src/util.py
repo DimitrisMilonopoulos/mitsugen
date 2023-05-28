@@ -8,8 +8,8 @@ from pathlib import Path
 from rich.logging import RichHandler
 from transformers import ColorTransformer
 
-from src.material_color_utilities_python import Image, themeFromImage
-from src.models import MaterialColors
+from material_color_utilities_python import Image, themeFromImage
+from models import MaterialColors
 
 
 def parse_arguments():
@@ -124,9 +124,9 @@ class Config:
                 with open(template_path, "r") as input:  # Template file
                     input_data = input.read()
             except OSError as err:
-                logging.exception(f"Could not open {err.filename}")
+                logging.exception(f"Could not open {err.filename}, skipping...")
                 num += 1
-                return
+                continue
 
             output_data = input_data
 
@@ -158,7 +158,7 @@ class Config:
                 with open(output_path, "w") as output:
                     output.write(output_data)
             except OSError as err:
-                logging.exception(
+                logging.warning(
                     f"Could not write {template_name} template to {err.filename}"
                 )
             else:

@@ -4,9 +4,9 @@ import subprocess
 from rich.console import Console
 from pydantic import BaseModel
 
-from src.models import MaterialColors
-from src.util import Config, Scheme, Theme, set_wallpaper
-from src.util import reload_apps
+from models import MaterialColors
+from util import Config, Scheme, Theme, set_wallpaper
+from util import reload_apps
 
 
 class GenerationOptions(BaseModel):
@@ -74,6 +74,7 @@ class ApplierDomain:
             self._generation_options.lightmode_enabled, scheme=self._get_scheme()
         )
         set_wallpaper(self._generation_options.wallpaper_path)
+        os.system("notify-send 'Theme applied! Enjoy!'")
 
     def _get_scheme(self) -> MaterialColors:
         if self._generation_options.wallpaper_path is None:
@@ -93,4 +94,7 @@ class ApplierDomain:
 
         # Remove leading/trailing whitespace and newline characters from the output
         output = output.strip()
-        return output.replace("'", "")
+        output = output.replace("'", "")
+        # Remove file:// from the output. If exists
+        output = output.replace("file://", "")
+        return output

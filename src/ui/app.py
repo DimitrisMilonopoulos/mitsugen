@@ -1,6 +1,6 @@
 import gi
 import re
-from src.applier.domain import ApplierDomain
+from applier.domain import ApplierDomain
 
 
 gi.require_version("Gtk", "4.0")
