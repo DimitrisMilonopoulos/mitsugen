@@ -1,4 +1,6 @@
 from configparser import ConfigParser
+import os
+import subprocess
 from rich.console import Console
 from pydantic import BaseModel
 
@@ -83,3 +85,12 @@ class ApplierDomain:
         colors = scheme.to_hex()
         print_scheme(colors)
         return colors
+
+    @staticmethod
+    def get_current_system_wallpaper_path() -> str:
+        command = "gsettings get org.gnome.desktop.background picture-uri"
+        output = subprocess.check_output(command, shell=True, text=True)
+
+        # Remove leading/trailing whitespace and newline characters from the output
+        output = output.strip()
+        return output

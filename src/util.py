@@ -15,7 +15,11 @@ from src.models import MaterialColors
 def parse_arguments():
     parser = ArgumentParser()
 
-    parser.add_argument("wallpaper", help="the wallpaper that will be used", type=str)
+    parser.add_argument(
+        "--wallpaper",
+        help="the wallpaper that will be used",
+        type=str,
+    )
 
     parser.add_argument(
         "-l",

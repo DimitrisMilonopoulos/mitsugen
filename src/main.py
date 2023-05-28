@@ -1,11 +1,8 @@
 import os
 
-from rich.console import Console
-
-from models import MaterialColors
 from src.applier.domain import ApplierDomain, GenerationOptions
-from src.util import Config, Scheme, Theme, parse_arguments, reload_apps, set_wallpaper
 from src.ui.app import GtkApp
+from src.util import Config, parse_arguments
 
 
 def main():  # sourcery skip: raise-specific-error
@@ -22,7 +19,8 @@ def main():  # sourcery skip: raise-specific-error
         generation_options=GenerationOptions(
             parent_dir=parent_dir,
             lightmode_enabled=lightmode_enabled,
-            wallpaper_path=arguments.wallpaper,
+            wallpaper_path=arguments.wallpaper
+            or ApplierDomain.get_current_system_wallpaper_path(),
         ),
     )
     if arguments.ui:
