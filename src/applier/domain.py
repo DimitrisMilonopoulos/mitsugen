@@ -81,8 +81,7 @@ class ApplierDomain:
     def _set_papirus_icon_theme(self, folder_color: str) -> None:
         print(f"Applying Papirus {folder_color}.")
         # Set current directory to home directory. No need for sudo then
-        os.chdir(os.path.expanduser("~"))
-        os.system(f"papirus-folders -C {folder_color}")
+        os.system("export PWD=$HOME")
         os.system(f"papirus-folders -C {folder_color}")
 
         lightmode_enabled = self._generation_options.lightmode_enabled

@@ -78,7 +78,7 @@ stage {
 .panel-button:active,
 .panel-button:overview, /* activites */
 .panel-button:active .clock{
-  background-color: @{surfaceVariant.hex};
+  background-color: @{inverseOnSurface.hex};
 }
 
 #panel .power-status.panel-status-indicators-box {
@@ -217,7 +217,7 @@ stage {
 
 .datemenu-today-button:hover {
   transition-duration: 100ms;
-  background-color:  @{surfaceVariant.hex};
+  background-color:  @{inverseOnSurface.hex};
 }
 
 .datemenu-today-button:focus {
@@ -255,7 +255,7 @@ stage {
   background-color:  @{surfaceVariant.hex};
   color: rgba(234, 243, 251, 1);
   box-shadow: inset 0 0 0 1px rgba(652, 652, 652, 0.03);
-}
+}calendar
 
 .calendar-day-base:active,
 .calendar-day-base:selected {
@@ -354,7 +354,7 @@ stage {
 }
 
 .message-list .message:hover {
-  background-color:  @{surfaceVariant.hex};
+  background-color:  @{inverseOnSurface.hex};
 }
 
 .message .message-body, .message-title {
@@ -378,7 +378,7 @@ stage {
 }
 
 .message-close-button:hover {
-  background-color:  @{surfaceVariant.hex};
+  background-color:  @{inverseOnSurface.hex};
 }
 
 .message-close-button:active {
@@ -469,7 +469,7 @@ stage {
 }
 
 .dnd-button:hover .toggle-switch {
-  background-color:  @{surfaceVariant.hex};
+  background-color:  @{inverseOnSurface.hex};
 }
 
 .dnd-button .toggle-switch:checked {
@@ -501,7 +501,7 @@ stage {
 }
 
 .button:hover, .button:active {
-  background-color:  @{surfaceVariant.hex};
+  background-color:  @{inverseOnSurface.hex};
 }
 
 .message-list-clear-button {
