@@ -5,10 +5,10 @@ from configparser import ConfigParser
 from pydantic import BaseModel
 from rich.console import Console
 
-from models import MaterialColors
-from src.material_color_utilities_python.closest_folder_color.domain import (
+from material_color_utilities_python.closest_folder_color.domain import (
     ClosestFolderColorDomain,
 )
+from models import MaterialColors
 from util import Config, Scheme, Theme, reload_apps, set_wallpaper
 
 
