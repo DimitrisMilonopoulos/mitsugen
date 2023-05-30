@@ -49,7 +49,7 @@ def customColor(source, color):
 #  * @return Theme object
 #  */
 # NOTE: Changes made to output format to be Dictionary
-def themeFromSourceColor(source, customColors=[]):
+def themeFromSourceColor(source: int, customColors=[]):
     palette = CorePalette.of(source)
     return {
         "source": source,
@@ -77,7 +77,7 @@ def themeFromSourceColor(source, customColors=[]):
 #  * @return Theme object
 #  */
 def themeFromImage(image, customColors=[]):
-    source = sourceColorFromImage(image)
+    source = sourceColorFromImageFast(image)
     return themeFromSourceColor(source, customColors)
 
 

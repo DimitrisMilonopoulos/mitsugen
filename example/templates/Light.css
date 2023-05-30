@@ -1313,3 +1313,7 @@ canvas.decorationsOverviewRuler {
     background: var(--card-bg) !important;
 
 }
+
+.interactive-session .interactive-input-part{
+	padding:0px !important;
+}

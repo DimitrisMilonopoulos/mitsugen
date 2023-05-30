@@ -21,4 +21,5 @@
 .theme-light {
     --saturation-modifier: 0.4;
     --lightness-modifier: 2.175;
+    --accent-hue: @{primary.hue}
 }

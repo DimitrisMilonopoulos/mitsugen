@@ -1,7 +1,9 @@
+import numpy as np
+
 from ..quantize.quantizer_celebi import *
 from ..score.score import *
 from .color_utils import *
-from PIL import Image
+
 
 # /**
 #  * Get the source color from an image.
@@ -37,11 +39,11 @@ def sourceColorFromImage(image):
     #     const argb = argbFromRgb(r, g, b);
     #     pixels.push(argb);
     # }
-    if (image.mode == 'RGB'):
-        image = image.convert('RGBA')
-    if (image.mode != 'RGBA'):
+    if image.mode == "RGB":
+        image = image.convert("RGBA")
+    if image.mode != "RGBA":
         print("Warning: Image not in RGB|RGBA format - Converting...")
-        image = image.convert('RGBA')
+        image = image.convert("RGBA")
 
     pixels = []
     for x in range(image.width):
@@ -52,13 +54,46 @@ def sourceColorFromImage(image):
             g = pixel[1]
             b = pixel[2]
             a = pixel[3]
-            if (a < 255):
+            if a < 255:
                 continue
             argb = argbFromRgb(r, g, b)
             pixels.append(argb)
 
     # // Convert Pixels to Material Colors
     result = QuantizerCelebi.quantize(pixels, 128)
+    ranked = Score.score(result)
+    top = ranked[0]
+    second_top = ranked[1]
+    print(top, second_top)
+    return top
+
+
+def sourceColorFromImageFast(image):
+    if image.mode == "RGB":
+        image = image.convert("RGBA")
+    if image.mode != "RGBA":
+        print("Warning: Image not in RGB|RGBA format - Converting...")
+        image = image.convert("RGBA")
+
+    pixel_array = np.array(image)
+    pixels = pixel_array.reshape(
+        -1, 4
+    )  # Reshape to a 2D array of shape (num_pixels, 4)
+
+    # Filter pixels based on alpha value and convert RGB to ARGB
+    valid_pixels = pixels[pixels[:, 3] == 255]
+    argb_pixels = np.empty((valid_pixels.shape[0],), dtype=np.uint32)
+    argb_pixels = np.zeros((valid_pixels.shape[0],), dtype=np.uint32)
+
+    argb_pixels |= valid_pixels[:, 3].astype(np.uint32) << 24
+    argb_pixels |= valid_pixels[:, 0].astype(np.uint32) << 16
+    argb_pixels |= valid_pixels[:, 1].astype(np.uint32) << 8
+    argb_pixels |= valid_pixels[:, 2].astype(np.uint32)
+
+    # Quantize and score the pixels
+    argb_pixels = argb_pixels.tolist()
+
+    result = QuantizerCelebi.quantize(argb_pixels, 128)
     ranked = Score.score(result)
     top = ranked[0]
     return top

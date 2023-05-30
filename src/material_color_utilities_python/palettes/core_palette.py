@@ -1,6 +1,7 @@
 from ..hct.hct import *
 from ..palettes.tonal_palette import *
 
+
 # /**
 #  * An intermediate concept between the key color for a UI theme, and a full
 #  * color scheme. 5 sets of tones are generated, all except one use the same hue
@@ -21,5 +22,5 @@ class CorePalette:
     #  * @param argb ARGB representation of a color
     #  */
     @staticmethod
-    def of(argb):
+    def of(argb: int):
         return CorePalette(argb)
