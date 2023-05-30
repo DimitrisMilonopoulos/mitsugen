@@ -1,11 +1,12 @@
-import gi
 import re
-from applier.domain import ApplierDomain
 
+import gi
+
+from applier.domain import ApplierDomain
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gdk, Gio, GLib, GObject
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 
 def hex_to_gdk_rgba(hex_color: str):
@@ -46,26 +47,62 @@ class MainWindow(Gtk.ApplicationWindow):
         self.box1.append(self.box3)
         self.set_default_size(600, 600)
         self.set_title("Mitsugen")
-        self._add_light_theme_switch()
 
         self.box2.set_margin_start(10)
         self.box2.set_margin_end(10)
+        # add outline to box2
         self.box2.append(self._add_wallpaper_image())
         file_picker_button = Gtk.Button(label="Select Wallpaper")
         file_picker_button.connect("clicked", self.on_file_picker_button_clicked)
         self._color_buttons: dict[str, Gtk.ColorButton] = {}
 
-        listbox = Gtk.ListBox(vexpand=True, hexpand=True, show_separators=False)
+        options_listbox = Gtk.ListBox(
+            vexpand=True,
+            hexpand=True,
+            show_separators=True,
+            selection_mode=Gtk.SelectionMode.NONE,
+            margin_top=5,
+            margin_bottom=5,
+            margin_start=5,
+            margin_end=5,
+        )
+        options_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        options_listbox.set_css_classes(["boxed-list"])
+        options_listbox.append(self._add_light_theme_switch())
+
+        options_preference_group = Adw.PreferencesGroup(
+            title="Apply Options", margin_top=20
+        )
+        options_preference_group.set_description("Set options for applying the theme")
+        options_preference_group.add(options_listbox)
+        self.box2.append(options_preference_group)
+
+        listbox = Gtk.ListBox(
+            vexpand=True,
+            hexpand=True,
+            show_separators=True,
+            selection_mode=Gtk.SelectionMode.NONE,
+            margin_top=5,
+            margin_bottom=5,
+            margin_start=5,
+            margin_end=5,
+        )
+        listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        listbox.set_css_classes(["boxed-list"])
+
+        preference_group = Adw.PreferencesGroup(title="Color Scheme", margin_top=20)
+        preference_group.set_description("Preview or adjust the color scheme")
+        preference_group.add(listbox)
         self._listbox = listbox
 
         self._color_key_items = {}
         for color_key in self._applier_domain.scheme.keys():
             self._listbox.append(self._add_color_pick_button(color_key))
-        self.box2.append(listbox)
+        # self.box2.append(listbox)
+        self.box2.append(preference_group)
         headerbar = Gtk.HeaderBar()
         headerbar.pack_end(self.create_button_apply_colorscheme())
         headerbar.pack_start(file_picker_button)
-        headerbar.pack_start(self.switch_box)
 
         self.set_titlebar(headerbar)
 
@@ -131,12 +168,10 @@ class MainWindow(Gtk.ApplicationWindow):
         return scrolled_window
 
     def _add_color_pick_button(self, color_key: str = "primary"):
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-
-        label = Gtk.Label(label=f"{color_title(color_key)}")
-        label.props.margin_start = 5
-        label.props.halign = Gtk.Align.START
-        label.props.hexpand = True
+        action_row = Adw.ActionRow()
+        action_row.set_title(color_title(color_key))
+        action_row.set_subtitle(color_key)
+        action_row.set_icon_name("color-picker")
 
         button = Gtk.ColorButton()
         button.set_title(color_key)
@@ -145,10 +180,13 @@ class MainWindow(Gtk.ApplicationWindow):
         button.props.halign = Gtk.Align.END
 
         button.connect("color-set", self.on_dialog_response)
+
+        button.set_valign(Gtk.Align.CENTER)
+        # Add button to action_row
+        action_row.add_suffix(button)
+
         self._color_buttons[color_key] = button
-        box.append(label)
-        box.append(button)
-        return box
+        return action_row
 
     def switch_switched(self, switch, state: bool):
         print(f"The switch has been switched {'on' if state else 'off'}")
@@ -163,15 +201,18 @@ class MainWindow(Gtk.ApplicationWindow):
             )
 
     def _add_light_theme_switch(self):
-        self.light_theme_switch = Gtk.Switch()
-        label = Gtk.Label(label="Light Theme")
-        self.switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        self.switch_box.append(label)
-        self.switch_box.set_spacing(5)
+        action_row = Adw.ActionRow()
+        action_row.set_title("Light Theme")
+        action_row.set_subtitle("Enable light theme configuration")
+
         self.light_theme_switch = Gtk.Switch()
         self.light_theme_switch.set_active(self._applier_domain.lightmode_enabled)
         self.light_theme_switch.connect("state-set", self.switch_switched)
-        self.switch_box.append(self.light_theme_switch)
+        self.light_theme_switch.set_valign(Gtk.Align.CENTER)
+
+        action_row.add_suffix(self.light_theme_switch)
+
+        return action_row
 
     def on_dialog_response(self, widget: Gtk.ColorButton):
         color = widget.get_rgba()
