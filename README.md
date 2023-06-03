@@ -38,7 +38,7 @@ poetry install
 - [x] Obisidian Adwaita theme (Requires `Adwaita` theme)
 - [x] Vivaldi theme
 - [x] BetterDiscord theme
-- [ ] Spotify theme
+- [x] Spotify theme
 - [ ] Any other theme you want me to add
 
 # Usage
@@ -117,6 +117,7 @@ Install [Material Discord](https://github.com/JustAlittleWolf/Material-You-Disco
 - [Obisidian Adwaita theme](https://github.com/birneee/obsidian-adwaita-theme)
 - [Material Color Utilities Python](https://github.com/avanisubbiah/material-color-utilities-python)
 - [FluentUI vscode](https://marketplace.visualstudio.com/items?itemName=leandro-rodrigues.fluent-ui-vscode)
+- [Spicetify Themes](https://github.com/spicetify/spicetify-themes)
 
 # Common issues
 

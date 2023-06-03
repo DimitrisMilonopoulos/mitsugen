@@ -84,7 +84,15 @@ class ApplierDomain:
         os.system("export PWD=$HOME")
         os.system(f"papirus-folders -C {folder_color}")
 
+        # get a key from the config that contains SPOTIFY in it
+
         lightmode_enabled = self._generation_options.lightmode_enabled
+
+        if self._has_config_key("SPOTIFY" if lightmode_enabled else "SPOTIFY-DARK" ):
+            print("Setting up spotify theme")
+            os.system("spicetify config current_theme Matte")
+            os.system("spicetify config color_scheme mitsugen")
+            os.system("spicetify apply")
 
         if lightmode_enabled:
             os.system(
@@ -94,6 +102,9 @@ class ApplierDomain:
             os.system(
                 "gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark"
             )
+
+    def _has_config_key(self, key: str) -> bool:
+        return any(key in self._conf[section].name for section in self._conf.sections())
 
     def _reload_apps(self) -> None:
         if self._generation_options.wallpaper_path is None:
