@@ -3,6 +3,7 @@ import re
 import gi
 
 from applier.domain import ApplierDomain
+from ui.widgets.colors_popover import ColorPopover
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -92,19 +93,46 @@ class MainWindow(Gtk.ApplicationWindow):
 
         preference_group = Adw.PreferencesGroup(title="Color Scheme", margin_top=20)
         preference_group.set_description("Preview or adjust the color scheme")
+        preference_group.add(self._generate_color_list())
         preference_group.add(listbox)
-        self._listbox = listbox
+        # self.box2.append(self._generate_color_list())
 
+        self._listbox = listbox
         self._color_key_items = {}
         for color_key in self._applier_domain.scheme.keys():
             self._listbox.append(self._add_color_pick_button(color_key))
-        # self.box2.append(listbox)
         self.box2.append(preference_group)
         headerbar = Gtk.HeaderBar()
         headerbar.pack_end(self.create_button_apply_colorscheme())
         headerbar.pack_start(file_picker_button)
 
         self.set_titlebar(headerbar)
+
+    def _set_colors_popover(self) -> None:
+        def on_menu_item_activated(color):
+            self._applier_domain.reset_scheme(color)
+            self.reset_buttons()
+
+        self._colors_popover = ColorPopover(
+            self._applier_domain.top_colors, on_menu_item_activated
+        )
+
+    def _generate_color_list(self) -> Gtk.DropDown:
+        self._set_colors_popover()
+        # Create a button to enable the popover
+        button = Gtk.Button(label="Select Different Accent")
+
+        def show_popover(*args, **kwargs):
+            self._colors_popover.set_position(Gtk.PositionType.BOTTOM)
+            self._colors_popover.set_autohide(True)
+            self._colors_popover.set_parent(button)
+            self._colors_popover.set_focus_on_click(False)
+            self._colors_popover.show()
+
+        button.connect("clicked", show_popover, button)
+        # set button max width
+        button.set_hexpand(False)
+        return button
 
     def _add_wallpaper_image(self):
         self.wallpaper_label = Gtk.Label(
@@ -137,6 +165,7 @@ class MainWindow(Gtk.ApplicationWindow):
                 self._applier_domain.reset_scheme()
                 self.reset_wallpaper()
                 self.reset_buttons()
+                self._set_colors_popover()
 
         except GLib.Error as error:
             print(f"Error opening file: {error.message}")

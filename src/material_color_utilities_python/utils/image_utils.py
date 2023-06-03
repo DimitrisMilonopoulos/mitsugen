@@ -68,7 +68,14 @@ def sourceColorFromImage(image):
     return top
 
 
-def sourceColorFromImageFast(image):
+def topColorsFromImage(image) -> list[int]:
+    """Get top 10 colors from image
+    Args:
+        image: PIL.Image
+
+    Returns:
+        list[str]: List of top 10 colors in hex format
+    """
     if image.mode == "RGB":
         image = image.convert("RGBA")
     if image.mode != "RGBA":
@@ -95,5 +102,8 @@ def sourceColorFromImageFast(image):
 
     result = QuantizerCelebi.quantize(argb_pixels, 128)
     ranked = Score.score(result)
-    top = ranked[0]
-    return top
+    if len(ranked) > 10:
+        print(ranked[:10])
+        return ranked[:10]
+
+    return ranked

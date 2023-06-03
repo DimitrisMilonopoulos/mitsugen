@@ -1,3 +1,5 @@
+from transformers import ColorTransformer
+
 from ..blend.blend import *
 from ..palettes.core_palette import *
 from ..scheme.scheme import *
@@ -77,8 +79,10 @@ def themeFromSourceColor(source: int, customColors=[]):
 #  * @return Theme object
 #  */
 def themeFromImage(image, customColors=[]):
-    source = sourceColorFromImageFast(image)
-    return themeFromSourceColor(source, customColors)
+    colors = topColorsFromImage(image)
+    return themeFromSourceColor(colors[0], customColors), [
+        ColorTransformer.argb_to_hex(color) for color in colors
+    ]
 
 
 # Not really applicable to python CLI

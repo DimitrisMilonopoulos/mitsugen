@@ -8,6 +8,7 @@ from pathlib import Path
 from rich.logging import RichHandler
 
 from material_color_utilities_python import Image, themeFromImage
+from material_color_utilities_python.utils.theme_utils import themeFromSourceColor
 from models import MaterialColors
 from transformers import ColorTransformer
 
@@ -177,7 +178,13 @@ class Theme:
 
         img = cls._get_image_from_file(image)
 
-        return themeFromImage(img)
+        theme, colors = themeFromImage(img)
+        return theme, colors
+
+    @staticmethod
+    def get_theme_from_color(color: str) -> dict:
+        rgb_color = ColorTransformer.hex_to_argb(color)
+        return themeFromSourceColor(rgb_color)
 
     @classmethod
     def _get_image_from_file(cls, image: str):

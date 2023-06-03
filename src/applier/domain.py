@@ -33,6 +33,7 @@ class ApplierDomain:
         self._generation_options = generation_options
         self._conf = conf
         self._closest_folder_color_domain = ClosestFolderColorDomain()
+        self._top_colors: list[str] = []
 
     def set_wallpaper_path(self, path: str) -> None:
         self._generation_options.wallpaper_path = path
@@ -45,8 +46,8 @@ class ApplierDomain:
             raise ValueError("Scheme is None")
         self._generation_options.scheme[key] = color
 
-    def reset_scheme(self) -> None:
-        self._generation_options.scheme = self._get_scheme()
+    def reset_scheme(self, color: str | None = None) -> None:
+        self._generation_options.scheme = self._get_scheme(color)
 
     @property
     def lightmode_enabled(self) -> bool:
@@ -88,7 +89,7 @@ class ApplierDomain:
 
         lightmode_enabled = self._generation_options.lightmode_enabled
 
-        if self._has_config_key("SPOTIFY" if lightmode_enabled else "SPOTIFY-DARK" ):
+        if self._has_config_key("SPOTIFY" if lightmode_enabled else "SPOTIFY-DARK"):
             print("Setting up spotify theme")
             os.system("spicetify config current_theme Matte")
             os.system("spicetify config color_scheme mitsugen")
@@ -115,12 +116,27 @@ class ApplierDomain:
         set_wallpaper(self._generation_options.wallpaper_path)
         os.system("notify-send 'Theme applied! Enjoy!'")
 
-    def _get_scheme(self) -> MaterialColors:
-        if self._generation_options.wallpaper_path is None:
-            raise ValueError("Wallpaper path is None")
+    def _get_scheme(self, color: str | None = None) -> MaterialColors:
+        if not color:
+            if self._generation_options.wallpaper_path is None:
+                raise ValueError("Wallpaper path is None")
+            theme, top_colors = Theme.get(self._generation_options.wallpaper_path)
+            self._top_colors = top_colors
+        else:
+            theme = Theme.get_theme_from_color(color)
+
+        return self._get_scheme_from_theme(theme)
+
+    @property
+    def top_colors(self) -> list[str]:
+        if not self._top_colors:
+            self._get_scheme()
+        return self._top_colors
+
+    def _get_scheme_from_theme(self, theme: dict) -> MaterialColors:
         scheme = Scheme(
-            Theme.get(self._generation_options.wallpaper_path),
-            self._generation_options.lightmode_enabled,
+            theme=theme,
+            lightmode=self._generation_options.lightmode_enabled,
         )
         colors = scheme.to_hex()
         print_scheme(colors)

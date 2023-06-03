@@ -20,6 +20,21 @@ class ColorTransformer:
         return red, green, blue
 
     @classmethod
+    def argb_to_hex(cls, argb: int) -> str:
+        if isinstance(argb, str):
+            argb = int(argb, 16)
+        red = (argb >> 16) & 255
+        green = (argb >> 8) & 0xFF
+        blue = argb & 0xFF
+
+        return "#{:02x}{:02x}{:02x}".format(red, green, blue)
+
+    @classmethod
+    def hex_to_argb(cls, hexa: str) -> int:
+        hexa = hexa.lstrip("#")
+        return int(hexa, 16)
+
+    @classmethod
     def hex_to_hls(cls, hexa: str) -> Tuple[int, int, int]:
         hue, light, saturation = colorsys.rgb_to_hls(*cls.hex_to_rgb(hexa))
         return int(hue * 360), int(light), int(saturation)
