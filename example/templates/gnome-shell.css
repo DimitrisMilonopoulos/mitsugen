@@ -608,7 +608,7 @@ stage {
 .quick-toggle:checked,
 .quick-menu-toggle .quick-toggle:checked,
 .quick-menu-toggle .quick-toggle-arrow:checked {
-  color: rgba(7, 25, 43, 0.87);
+  color: @{onPrimary.hex};
   background-color: @{primary.hex};
 }
 

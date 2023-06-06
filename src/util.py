@@ -52,25 +52,24 @@ log = setup_logging()
 
 
 def reload_apps(lightmode_enabled: bool, scheme: MaterialColors):
-    adw_theme = "adw-gtk3-dark" if not lightmode_enabled else "adw-gtk3"
     postfix = "dark" if not lightmode_enabled else "light"
 
     log.info(f"Restarting GTK {postfix}")
-    os.system(f"gsettings set org.gnome.desktop.interface gtk-theme {adw_theme}")
+    os.system(f"gsettings set org.gnome.desktop.interface gtk-theme Adwaita")
+    os.system("sleep 0.5")
     os.system(f"gsettings set org.gnome.desktop.interface gtk-theme custom-{postfix}")
 
     log.info("Restarting Gnome Shell theme")
-    os.system(
-        f"gsettings set org.gnome.shell.extensions.user-theme name 'Marble-green-{postfix}'"
-    )
+    os.system(f"gsettings set org.gnome.shell.extensions.user-theme name 'Default'")
+    os.system("sleep 0.5")
     os.system(
         f"gsettings set org.gnome.shell.extensions.user-theme name 'Marble-blue-{postfix}'"
     )
 
 
 def set_wallpaper(path: str):
-    log.info("Setting wallpaper with swaybg")
-    os.system("gsettings set org.gnome.desktop.background picture-options 'scaled'")
+    log.info("Setting wallpaper in gnome")
+    os.system("gsettings set org.gnome.desktop.background picture-options 'spanned'")
     os.system(f"gsettings set org.gnome.desktop.background picture-uri {path}")
 
 

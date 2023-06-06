@@ -1,8 +1,6 @@
-from curses import termattrs
-
-from regex import P
-from ..palettes.core_palette import *
 import json
+
+from ..palettes.core_palette import *
 
 
 # /**
@@ -131,8 +129,8 @@ class Scheme:
         core = CorePalette.of(argb)
         return Scheme(
             {
-                "primary": core.a1.tone(75),
-                "onPrimary": core.a1.tone(95),
+                "primary": core.a1.tone(80),
+                "onPrimary": core.a1.tone(20),
                 "primaryContainer": core.a1.tone(90),
                 "onPrimaryContainer": core.a1.tone(10),
                 "secondary": core.a2.tone(40),
@@ -170,7 +168,7 @@ class Scheme:
         core = CorePalette.of(argb)
         return Scheme(
             {
-                "primary": core.a1.tone(70),
+                "primary": core.a1.tone(80),
                 "onPrimary": core.a1.tone(20),
                 "primaryContainer": core.a1.tone(30),
                 "onPrimaryContainer": core.a1.tone(90),
