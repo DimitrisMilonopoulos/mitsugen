@@ -69,7 +69,7 @@ def reload_apps(lightmode_enabled: bool, scheme: MaterialColors):
 
 def set_wallpaper(path: str):
     log.info("Setting wallpaper in gnome")
-    os.system("gsettings set org.gnome.desktop.background picture-options 'spanned'")
+    os.system("gsettings set org.gnome.desktop.background picture-options 'zoom'")
     os.system(f"gsettings set org.gnome.desktop.background picture-uri {path}")
 
 
